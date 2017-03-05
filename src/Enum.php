@@ -1,6 +1,9 @@
 <?php
 namespace cgTag\Enums;
 
+use cgTag\Enums\Exceptions\EnumException;
+use cgTag\Exceptions\NotImplementedException;
+
 /**
  * Use this GemsEnum as a base class to declare enumerations.
  */
@@ -12,7 +15,10 @@ abstract class Enum
      */
     final public static function isValid($value): bool
     {
-        return in_array($value, static::toArray());
+        if (is_array($value) || is_object($value)) {
+            return false;
+        }
+        return in_array($value, static::toArray(), true);
     }
 
     /**
@@ -57,9 +63,7 @@ abstract class Enum
         if (static::isValid($value)) {
             return $value;
         }
-        $className = get_called_class();
-        //throw new InvalidOperationException("[{$value}] is not a [{$className}] enum");
-        throw new \Exception("[{$value}] is not a [{$className}] enum");
+        throw new EnumException($value, get_called_class());
     }
 
     /**
@@ -67,8 +71,7 @@ abstract class Enum
      */
     final private function __construct()
     {
-        //throw new GemsNotImplementedException();
-        throw new \Exception('not implemented');
+        throw new NotImplementedException();
     }
 
     /**
@@ -76,7 +79,6 @@ abstract class Enum
      */
     final private function __clone()
     {
-        //throw new GemsNotImplementedException();
-        throw new \Exception('not implemented');
+        throw new NotImplementedException();
     }
 }

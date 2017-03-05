@@ -19,7 +19,8 @@
     "source": "https://github.com/cgTag/php-enums"
   },
   "require": {
-    "php": ">=7.1.0"
+    "php": ">=7.1.0",
+    "cgtag/php-exceptions": "dev-master"
   },
   "require-dev": {
     "phpunit/phpunit": ">=5.7,<6"
